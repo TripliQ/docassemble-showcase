@@ -1,6 +1,6 @@
 metadata:
   unlisted: True
-  title:  |
+  title: |
     TripliQ Produktdemo Arbeitsvertrag
   short title: |
     TripliQ Arbeitsvertrag
@@ -34,20 +34,21 @@ objects:
 code: |
   ende_arbeitsverhaeltnis = start_arbeit + date_interval(months=int(probezeit)) - date_interval(days=1)
   probezeit_worte = num2words.num2words(probezeit, lang='de')
- # 4 Wochen Arbeitszeit * Stunden pro Woche
- # stunden_lohn = brutto_verguetung /  4 * arbeitszeit 
+
+# 4 Wochen Arbeitszeit * Stunden pro Woche
+# stunden_lohn = brutto_verguetung /  4 * arbeitszeit
 ---
 sections:
   - Produktdemo
   - TripliQ Hinweis
   - Vertragsparteien:
-    - Arbeitgeber
-    - Arbeitnehmer
+      - Arbeitgeber
+      - Arbeitnehmer
   - Arbeitsverhältnis:
-    - Beginn
-    - Befristet
-    - Probezeit
-    - Tätigkeit
+      - Beginn
+      - Befristet
+      - Probezeit
+      - Tätigkeit
   - Arbeitszeit
   - Arbeitsvergütung
   - Urlaub
@@ -77,7 +78,7 @@ event: disclaimer_screen
 question: TripliQ Hinweis
 subquestion: |
   TripliQ umfasst ***keine Rechtsberatung bzw. Rechtsdienstleistung***, d.h. es erfolgt keine rechtliche Prüfung des konkreten Einzelfalls im Sinne des Rechtsdienstleistungsgesetzes (RDG) durch TripliQ. 
-  
+
   - Das Angebot „TripliQ" unterstützt den Kunden durch ein softwaregestützten Interview- und Vertragserstellungsprozess bei der eigenverantwortlichen Erstellung seiner Rechtsdokumente. 
   - Dieser Prozess ist grundsätzlich so gestaltet, dass die Anwendung keine besonderen Rechtskenntnisse erfordert. Ein automatisierter Interviewprozess kann allerdings nicht jeden einzelnen Sachverhalt mit seinen spezifischen Besonderheiten erfassen. 
   - Der Kunde ist daher gehalten, die erstellten Rechtsdokumente im Hinblick auf die von ihm angestrebte Verwendung insbesondere einer Plausibilitätsprüfung zu unterziehen. Sollte eine rechtliche Prüfung im konkreten Einzelfall erforderlich werden, empfehlen wir, den Rat eines Rechtsanwalts oder einer sonstigen zur Erbringung von Rechtsdienstleistungen nach dem RDG berechtigten Stelle zu suchen.
@@ -196,7 +197,7 @@ id: arbeitsvertragVerguetung
 question: |
   Wie hoch ist die monatliche Bruttovergütung?
 fields:
-  - "Monatliche Bruttovergütung": brutto_verguetung
+  - 'Monatliche Bruttovergütung': brutto_verguetung
     datatype: currency
     default: 2000
     min: 0
