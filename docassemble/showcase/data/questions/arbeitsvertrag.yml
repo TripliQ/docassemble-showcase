@@ -1,0 +1,262 @@
+metadata:
+  unlisted: True
+  title:  |
+    TripliQ Produktdemo Arbeitsvertrag
+  short title: |
+    TripliQ Arbeitsvertrag
+  tab title: |
+    Arbeitsvertrag
+  description: |
+    Mit der TripliQ Arbeitsvertrag Demo kannst du online einen Arbeitsvertrag mit wenigen Clicks erstellen!
+  subtitle: |
+    TripliQ Arbeitsvertrag Demo
+  authors:
+    - name: Felix Vemmer
+      organization: TripliQ
+---
+imports:
+  - num2words
+---
+mandatory: True
+code: |
+  intro_screen_shown
+  disclaimer_screen_shown
+  finsihed_arbeitsvertrag
+---
+code: |
+  disclaimer_screen_shown = True
+  force_ask('disclaimer_screen')
+---
+objects:
+  - arbeitgeber: Individual
+  - arbeitnehmer: Individual
+---
+code: |
+  ende_arbeitsverhaeltnis = start_arbeit + date_interval(months=int(probezeit)) - date_interval(days=1)
+  probezeit_worte = num2words.num2words(probezeit, lang='de')
+ # 4 Wochen Arbeitszeit * Stunden pro Woche
+ # stunden_lohn = brutto_verguetung /  4 * arbeitszeit 
+---
+sections:
+  - Produktdemo
+  - TripliQ Hinweis
+  - Vertragsparteien:
+    - Arbeitgeber
+    - Arbeitnehmer
+  - Arbeitsverhältnis:
+    - Beginn
+    - Befristet
+    - Probezeit
+    - Tätigkeit
+  - Arbeitszeit
+  - Arbeitsvergütung
+  - Urlaub
+  - Zusätzliche Vereinbarungen
+  - Unterschrift
+---
+features:
+  navigation: True
+  progress bar: True
+---
+id: arbeitsvertragIntroScreen
+question: TripliQ Produktdemo
+subquestion: |
+  <br>
+  ${ static_image('undraw_publish_article_re_3x8h.svg', width='80%') }
+  <br>
+  <br>
+  <h5>Bereit für die Produktdemo?</h5>
+under: |
+  Die **Produktdemo für eine Abmeldung in Berlin** findest du [hier](http://app.tripliq.com/start/abmeldung/).
+continue button field: intro_screen_shown
+continue button label: Arbeitsvertrag Demo starten
+section: Produktdemo
+---
+id: arbeitsvertragDisclaimerScreen
+event: disclaimer_screen
+question: TripliQ Hinweis
+subquestion: |
+  TripliQ umfasst ***keine Rechtsberatung bzw. Rechtsdienstleistung***, d.h. es erfolgt keine rechtliche Prüfung des konkreten Einzelfalls im Sinne des Rechtsdienstleistungsgesetzes (RDG) durch TripliQ. 
+  
+  - Das Angebot „TripliQ" unterstützt den Kunden durch ein softwaregestützten Interview- und Vertragserstellungsprozess bei der eigenverantwortlichen Erstellung seiner Rechtsdokumente. 
+  - Dieser Prozess ist grundsätzlich so gestaltet, dass die Anwendung keine besonderen Rechtskenntnisse erfordert. Ein automatisierter Interviewprozess kann allerdings nicht jeden einzelnen Sachverhalt mit seinen spezifischen Besonderheiten erfassen. 
+  - Der Kunde ist daher gehalten, die erstellten Rechtsdokumente im Hinblick auf die von ihm angestrebte Verwendung insbesondere einer Plausibilitätsprüfung zu unterziehen. Sollte eine rechtliche Prüfung im konkreten Einzelfall erforderlich werden, empfehlen wir, den Rat eines Rechtsanwalts oder einer sonstigen zur Erbringung von Rechtsdienstleistungen nach dem RDG berechtigten Stelle zu suchen.
+buttons:
+  - Ich habe die Hinweise gelesen: continue
+section: TripliQ Hinweis
+---
+id: arbeitsvertragAnschriftArbeitgeber
+question: |
+  Name und Anschrift des Arbeitgebers
+subquestion: |
+  Bitte geben Sie die folgenden Infos zum Arbeitgeber an.
+fields:
+  - Wird der Arbeitgeber durch eine Person vertreten?: vertreten
+    datatype: yesnoradio
+    default: True
+  - Vorname der vertretenden Person: arbeitgeber.name.first
+    hint: Max
+    default: Max
+    show if: vertreten
+  - Nachname der vertretenden Person: arbeitgeber.name.last
+    hint: Mustermann
+    default: Mustermann
+    show if: vertreten
+  - Firmenname: arbeitgeber.company_name
+    hint: Firma ABC
+    default: Firma ABC
+  - Adresse: arbeitgeber.address.address
+    hint: Musterstraße 12
+    default: Musterstraße 12
+  - Postleitzahl: arbeitgeber.address.postal_code
+    hint: 12345
+    default: 12345
+    required: True
+  - Stadt: arbeitgeber.address.city
+    hint: Musterstadt
+    default: Musterstadt
+section: Arbeitgeber
+---
+id: arbeitsvertragAnschriftArbeitnehmer
+question: |
+  Name und Anschrift des Arbeitnehmers
+subquestion: |
+  Bitte geben Sie hier die Infos zum Arbeitnehmer ein.
+fields:
+  - Titel: arbeitnehmer.title
+    choices:
+      - Herr
+      - Frau
+    default: Frau
+  - Vorname: arbeitnehmer.name.first
+    hint: Erika
+    default: Erika
+  - Nachname: arbeitnehmer.name.last
+    hint: Musterfrau
+    default: Musterfrau
+  - Adresse: arbeitnehmer.address.address
+    hint: Musterweg 34
+    default: Musterweg 34
+  - Postleitzahl: arbeitnehmer.address.postal_code
+    hint: 12345
+    default: 12345
+    required: True
+  - Stadt: arbeitnehmer.address.city
+    hint: Musterhausen
+    default: Musterhausen
+section: Arbeitnehmer
+---
+id: arbeitsvertragBeginnArbeitsverhaeltnis
+question: |
+  Wann beginnt das Arbeitsverhältnis?
+fields:
+  - Start Datum: start_arbeit
+    datatype: date
+    default: 2021-01-01
+section: Beginn
+---
+id: arbeitsvertragDauerProbezeit
+question: |
+  Wie lange soll die Probezeit sein?
+field: probezeit
+buttons:
+  - 3 Monate: 3
+  - 6 Monate: 6
+section: Probezeit
+---
+id: arbeitsvertragBefristet
+question: |
+  Soll ein unbefristeter Arbeitsvertrag abgeschlossen werden?
+yesno: unbefristet
+section: Befristet
+---
+id: arbeitsvertragTaetigkeitArbeitgeber
+question: |
+  Wie lautet die Tätigkeit des Arbeitgebers?
+subquestion: |
+  Bei der Angabe der Tätigkeiten empfiehlt sich keine zu starke Einengung, da bei einer Änderung der Arbeitnehmer ansonsten zustimmen muss oder eine sozial gerechtfertigte Änderungskündigung auszusprechen ist.
+fields:
+  - Tätigkeit: taetigkeit
+    default: Arbeitstätigkeit
+section: Tätigkeit
+---
+id: arbeitsvertragArbeitszeit
+question: |
+  Wie hoch ist die regelmäßige wöchentliche Arbeitszeit?
+fields:
+  - Arbeitszeit in Stunden: arbeitszeit
+    datatype: integer
+    default: 40
+    min: 1
+    # hier könnte man smarte rechtliche sachen machen z.B. was verboten ist mehr als xxx...
+    max: 50
+section: Arbeitszeit
+---
+id: arbeitsvertragVerguetung
+question: |
+  Wie hoch ist die monatliche Bruttovergütung?
+fields:
+  - "Monatliche Bruttovergütung": brutto_verguetung
+    datatype: currency
+    default: 2000
+    min: 0
+section: Arbeitsvergütung
+---
+id: arbeitsvertragUrlaub
+question: |
+  Wie viele Tage zusätzlichen vertraglichen Urlaub sollen gewährt werden?
+fields:
+  - Tage: vertraglicher_urlaub
+    default: 6
+    datatype: integer
+    min: 1
+section: Urlaub
+---
+id: arbeitsvertragUnterschreibenJaNein
+question: |
+  Möchten Sie den Vertrag als Arbeitgeber (${ arbeitgeber.name }) direkt unterschreiben?
+yesno: online_signature
+section: Unterschrift
+---
+id: arbeitsvertragZusaetzlicheVereinbarungen
+question: |
+  Möchten Sie zusätzliche Vereinbarungen einfügen?
+yesno: zusaetzliche_vereinbarungen
+section: Zusätzliche Vereinbarungen
+---
+id: arbeitsvertragZusaetzlicheVereinbarungenJaNein
+question: |
+  Möchten Sie zusätzliche Vereinbarungen einfügen?
+fields:
+  - Zusätzliche Vereinbarungen: zusaetzliche_vereinbarungen
+    datatype: yesnoradio
+    default: True
+  - Text der Zusatzvereinbarung: zusaetzliche_vereinbarungen_text
+    input type: area
+    default: Text für Zusatzvereinbarung
+    show if: zusaetzliche_vereinbarungen
+section: Zusätzliche Vereinbarungen
+---
+id: arbeitsvertragUnterschriftArbeitgeber
+question: |
+  Bitte unterschreiben Sie als Arbeitgeber
+signature: arbeitgeber.signature
+under: |
+  ${ arbeitgeber.name }
+section: Unterschrift
+---
+id: arbeitsvertragFinalScreen
+question: |
+  Hier ist Ihr Arbeitsvertrag.
+subquestion: |
+  Bitte unterschreiben Sie diesen und drucken Sie ihn aus.
+attachment:
+  name: Arbeitsvertrag
+  filename: arbeitsvertrag
+  variable name: finsihed_arbeitsvertrag
+  docx template file: demo_arbeitsvertrag.docx
+  valid formats:
+    - pdf
+    - docx
+mandatory: True
+progress: 100
